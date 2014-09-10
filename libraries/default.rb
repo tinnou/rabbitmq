@@ -24,6 +24,7 @@ module Opscode
     def format_kernel_parameters
       rendered = []
       kernel = node['rabbitmq']['kernel'].dup
+      Chef::Log.info "Antoine: #{node['rabbitmq']['kernel'].inspect}"
 
       # This parameter is special and needs commas instead of periods.
       rendered << "{inet_dist_use_interface, {#{kernel[:inet_dist_use_interface].gsub(/\./, ',')}}}" if kernel[:inet_dist_use_interface]
