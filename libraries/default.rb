@@ -33,9 +33,13 @@ module Opscode
       # Otherwise, we can just render it nicely as Erlang wants. This
       # theoretically opens the door for arbitrary kernel_app parameters to be
       # declared.
-      Chef::Log.info "Antoine"
-      kernel.select { |k, v| !v.nil? }.each_pair do |param, val|
-        rendered << "{#{param}, #{val}}"
+      Chef::Log.info "Antoine : #{rendered}"
+      Chef::Log.info "Antoine : #{kernel.select { |k, v| !v.nil? }}"
+      kernel = kernel.select { |k, v| !v.nil? }
+      if !kernel.blank? 
+        kernel.each_pair do |param, val|
+          rendered << "{#{param}, #{val}}"
+        end
       end
 
       rendered.each { |r| r.prepend('    ') }.join(",\n")
