@@ -24,7 +24,6 @@ module Opscode
     def format_kernel_parameters
       rendered = []
       kernel = node['rabbitmq']['kernel'].dup
-      Chef::Log.info "Antoine: #{node['rabbitmq']['kernel'].inspect}"
 
       # This parameter is special and needs commas instead of periods.
       rendered << "{inet_dist_use_interface, {#{kernel[:inet_dist_use_interface].gsub(/\./, ',')}}}" if kernel[:inet_dist_use_interface]
@@ -33,8 +32,6 @@ module Opscode
       # Otherwise, we can just render it nicely as Erlang wants. This
       # theoretically opens the door for arbitrary kernel_app parameters to be
       # declared.
-      Chef::Log.info "Antoine : #{rendered}"
-      Chef::Log.info "Antoine : #{kernel.select { |k, v| !v.nil? }}"
       kernel = kernel.select { |k, v| !v.nil? }
       if !kernel.blank? 
         kernel.each_pair do |param, val|
